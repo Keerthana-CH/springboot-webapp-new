@@ -2,8 +2,10 @@ package com.sfgspringframework6.section2.springbootwebappnew.bootstrap;
 
 import com.sfgspringframework6.section2.springbootwebappnew.domain.Author;
 import com.sfgspringframework6.section2.springbootwebappnew.domain.Book;
+import com.sfgspringframework6.section2.springbootwebappnew.domain.Publisher;
 import com.sfgspringframework6.section2.springbootwebappnew.repositories.AuthorRepository;
 import com.sfgspringframework6.section2.springbootwebappnew.repositories.BookRepository;
+import com.sfgspringframework6.section2.springbootwebappnew.repositories.PublisherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +14,12 @@ public class BootstrapData implements CommandLineRunner {
 
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
+    private final PublisherRepository publisherRepository;
 
-    public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository) {
+    public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository, PublisherRepository publisherRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
+        this.publisherRepository = publisherRepository;
     }
 
     @Override
@@ -43,6 +47,11 @@ public class BootstrapData implements CommandLineRunner {
         Author savedAuthor2 = authorRepository.save(author2);
         Book savedBook2 = bookRepository.save(book2);
 
+        Publisher publisher = new Publisher();
+        publisher.setPublisherName("My Publisher");
+        publisher.setAddress("123 Main");
+        Publisher savedPublisher = publisherRepository.save(publisher);
+
         savedAuthor1.getBooks().add(savedBook1);
         savedAuthor2.getBooks().add(savedBook2);
 
@@ -50,10 +59,12 @@ public class BootstrapData implements CommandLineRunner {
         bookRepository.save(savedBook1);
         authorRepository.save(savedAuthor2);
         bookRepository.save(savedBook2);
+        publisherRepository.save(savedPublisher);
 
         System.out.println("In Bootstrap");
         System.out.println("Author Count : " + authorRepository.count());
         System.out.println("Book Count : " + bookRepository.count());
+        System.out.println("Publisher Count: " + publisherRepository.count());
 
     }
 }
