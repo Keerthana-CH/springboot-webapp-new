@@ -1,9 +1,8 @@
 package com.sfgspringframework6.section2.springbootwebappnew.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 public class Author {
@@ -14,6 +13,17 @@ public class Author {
     private String firstName;
     private String lastName;
 
+
+    @ManyToMany(mappedBy = "authors")
+    private Set<Book> books;
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
 
     public void setId(Long id) {
         this.id = id;
